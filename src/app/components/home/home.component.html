@@ -15,8 +15,8 @@
     <mat-card class="user-card" routerLink="/profile">
       <mat-card-header>
         <div mat-card-avatar class="user-image"></div>
-        <mat-card-title>John Doe</mat-card-title>
-        <mat-card-subtitle>Agricultor Experimentado</mat-card-subtitle>
+        <mat-card-title>{{ user?.fullName }}</mat-card-title>
+        <mat-card-subtitle>{{ '@' + user?.username }}</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
 
