@@ -1,12 +1,12 @@
 <div class="form">
   <div class="form__container">
     <h1>Log in</h1>
-    <form [formGroup]="form" (ngSubmit)="logIn()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Email -->
       <div>
         <mat-form-field>
           <mat-label>Enter your email</mat-label>
-          <input matInput formControlName="email" placeholder="pat@example.com" />
+          <input matInput formControlName="username" placeholder="pat@example.com" />
           <mat-error> Please enter a valid email </mat-error>
         </mat-form-field>
       </div>
@@ -23,7 +23,7 @@
       </div>
       <!-- Button sign up -->
       <div>
-        <button mat-flat-button color="primary" type="submit" routerLink="/home">Log in</button>
+        <button mat-flat-button color="primary" type="submit">Log in</button>
       </div>
     </form>
     <hr/>

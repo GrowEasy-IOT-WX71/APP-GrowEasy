@@ -1,35 +1,44 @@
 <div class="form">
   <div class="form__container">
     <h1>Sign up</h1>
-    <form [formGroup]="form" (ngSubmit)="signUp()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div>
         <mat-form-field>
           <mat-label>Nombres</mat-label>
-          <input matInput formControlName="names" />
-          <mat-error>This field is required</mat-error>
+          <input matInput formControlName="firstname" />
+          <mat-error *ngIf="form.get('firstname')?.hasError('required')">
+            This field is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
           <mat-label>Apellidos</mat-label>
-          <input matInput formControlName="lastName" />
-          <mat-error>This field is required</mat-error>
+          <input matInput formControlName="lastname" />
+          <mat-error *ngIf="form.get('lastname')?.hasError('required')">
+            This field is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
           <mat-label>Email</mat-label>
-          <input matInput formControlName="email" />
-          <mat-error *ngIf="isEmailValid as messsage">{{ messsage }}</mat-error>
+          <input matInput formControlName="username" />
+          <mat-error *ngIf="form.get('username')?.hasError('required')">
+            This field is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
-          <mat-label>Select</mat-label>
-          <mat-select>
-            <mat-option value="expert">Agricultor Experimentado</mat-option>
-            <mat-option value="fan">Aficionado</mat-option>
+          <mat-label>Select Role</mat-label>
+          <mat-select formControlName="role">
+            <mat-option value="EXPERT">Agricultor Experimentado</mat-option>
+            <mat-option value="AMATEUR">Aficionado</mat-option>
           </mat-select>
+          <mat-error *ngIf="form.get('role')?.hasError('required')">
+            Please select a role
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
@@ -46,17 +55,24 @@
             (click)="hide = !hide"
             [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide"
+            type="button"
           >
             <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
-          <mat-error>This field is required</mat-error>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">
+            This field is required
+          </mat-error>
         </mat-form-field>
       </div>
       <div>
-        <button mat-flat-button color="primary" type="submit" routerLink="/login">Sign up</button>
+        <button mat-flat-button color="primary" type="submit">
+          Sign up
+        </button>
       </div>
     </form>
     <hr />
-    <span class="small-text log-in-redirect">Already have an account? <a routerLink="/login">Log in</a></span>
+    <span class="small-text log-in-redirect">
+      Already have an account? <a routerLink="/login">Log in</a>
+    </span>
   </div>
 </div>
