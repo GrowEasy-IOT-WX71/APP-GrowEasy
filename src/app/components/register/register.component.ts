@@ -15,13 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatOption, MatSelect} from '@angular/material/select';
-
-interface SignUpForm {
-  names: FormControl<string>;
-  lastName: FormControl<string>;
-  email: FormControl<string>;
-  password: FormControl<string>;
-}
+import {AuthService} from '../../services/auth.service';
+import {SignUp} from '../../model/sign-up';
 
 @Component({
   selector: 'app-register',
@@ -43,75 +38,54 @@ interface SignUpForm {
 })
 export class RegisterComponent {
   hide = true;
+  form: FormGroup;
+  register: SignUp | null = null;
+  isEmailValid = true;
 
-  formBuilder = inject(FormBuilder);
+  constructor(
+    private readonly authService: AuthService,
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router
+  ) {
 
-  private _router = inject(Router);
-
-  redirectToRegister(): void {
-    this._router.navigateByUrl('/register');
+    this.form = this.formBuilder.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      role: ['', Validators.required]
+    });
   }
 
-  form: FormGroup = this.formBuilder.group({
-    names: this.formBuilder.control('', {
-      validators: Validators.required,
-      nonNullable: true,
-    }),
-    lastName: this.formBuilder.control('', {
-      validators: Validators.required,
-      nonNullable: true,
-    }),
-    email: this.formBuilder.control('', {
-      validators: [Validators.required, Validators.email],
-      nonNullable: true,
-    }),
-    password: this.formBuilder.control('', {
-      validators: Validators.required,
-      nonNullable: true,
-    }),
-  });
+  public onSubmit(): void {
+    if (this.form.valid) {
+      // Crear el objeto register con los valores del formulario
+      this.register = {
+        firstName: this.form.get('firstname')?.value,
+        lastName: this.form.get('lastname')?.value,
+        username: this.form.get('username')?.value,
+        password: this.form.get('password')?.value,
+        role: this.form.get('role')?.value
+      };
 
-  private _snackBar = inject(MatSnackBar);
-
-  get isEmailValid(): string | boolean {
-    const control = this.form.get('email');
-
-    const isInvalid = control?.invalid && control.touched;
-
-    if (isInvalid) {
-      return control.hasError('required')
-        ? 'This field is required'
-        : 'Enter a valid email';
+      console.log('Registro:', this.register);
+      this.authService.signUp(this.register).subscribe({
+        next: () => {
+          this.router.navigate(['/home'])
+            .then(r => console.log('Redirection a /home:', r));
+        },
+        error: (error) => {
+          console.error('Error en el registro:', error);
+          alert('Error en el registro. Por favor, intente de nuevo.');
+        }
+      });
+    } else {
+      console.error('Formulario no válido');
     }
-
-    return false;
   }
 
-  async signUp(): Promise<void> {
-    if (this.form.invalid) return;
-
-    // Recopila datos del usuario
-    const userData = {
-      displayName: `${this.form.value.names} ${this.form.value.lastName}`,
-      email: this.form.value.email,
-      password: this.form.value.password,
-    };
-
-    // Aquí puedes realizar el manejo de datos que necesites (por ejemplo, enviarlos a un backend)
-    console.log('User Data:', userData);
-
-    const snackBarRef = this.openSnackBar();
-
-    snackBarRef.afterDismissed().subscribe(() => {
-      this._router.navigateByUrl('/home');
-    });
-  }
-
-  openSnackBar() {
-    return this._snackBar.open('Successfully Sign up 😀', 'Close', {
-      duration: 2500,
-      verticalPosition: 'top',
-      horizontalPosition: 'end',
-    });
+  public checkEmailValidity(): void {
+    const emailControl = this.form.get('username');
+    this.isEmailValid = emailControl ? emailControl.valid : false;
   }
 }

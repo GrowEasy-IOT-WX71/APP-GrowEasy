@@ -9,21 +9,21 @@
         <li><a href="/store">Store</a></li>
       </ul>
     </nav>
-    <button class="logout-button" routerLink="/login">log out</button>
+    <button class="logout-button" (click)="logout()">Log out</button>
   </aside>
 
   <main class="content">
     <section class="profile">
       <div class="profile-header">
         <img src="https://png.pngtree.com/thumb_back/fw800/background/20220127/pngtree-young-man-young-person-smiling-photo-image_783361.jpg" alt="John Doe" class="profile-image">
-        <h1>John Doe</h1>
+        <h1>{{ user?.fullName }}</h1>
         <div class="profile-info">
-          <p><strong>Mail:</strong> johndoe&#64;gmail.com</p>
+          <p><strong>Username: </strong>{{ '@' + user?.username }}</p>
           <p><strong>Birthday:</strong> 22/10/2000</p>
-          <p><strong>Gender:</strong> Male</p>
-          <p><strong>Subscription:</strong> Premium</p>
-          <p><strong>Rol:</strong>Expert farmer</p>
-          <p><strong>Renewal date:</strong> 30/09/2024</p>
+          <p><strong>Gender: </strong> Male</p>
+          <p><strong>Subscription: </strong> Premium</p>
+          <p><strong>Rol: </strong>{{ user?.role }}</p>
+          <p><strong>Renewal date: </strong> 30/09/2024</p>
         </div>
       </div>
     </section>

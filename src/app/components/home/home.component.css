@@ -63,12 +63,22 @@ nav ul li a {
 .user-card {
   max-width: 300px;
   margin: 20px 0;
+  padding-bottom: 20px;
   cursor: pointer;
   background-color: mediumseagreen;
 }
-
 .user-image {
   background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20220127/pngtree-young-man-young-person-smiling-photo-image_783361.jpg'); /* Cambia esta ruta a la imagen de usuario */
+  background-size: cover;
+  background-position: center;
+}
+.on-device-image {
+  background-image: url('https://static.vecteezy.com/system/resources/previews/009/536/860/non_2x/wi-fi-icon-wireless-network-symbol-for-internet-connection-flat-style-illustration-vector.jpg'); /* Cambia esta ruta a la imagen de usuario */
+  background-size: cover;
+  background-position: center;
+}
+.off-device-image {
+  background-image: url('https://c8.alamy.com/compes/2a8w5d8/no-hay-conexion-a-internet-wireless-icono-de-senal-2a8w5d8.jpg'); /* Cambia esta ruta a la imagen de usuario */
   background-size: cover;
   background-position: center;
 }
