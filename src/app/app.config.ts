@@ -10,6 +10,7 @@ import {AuthService} from './services/auth.service';
 import {UserService} from './services/user.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +27,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       BrowserAnimationsModule,
       ReactiveFormsModule
-    )
+    ), provideCharts(withDefaultRegisterables())
   ]
 };
